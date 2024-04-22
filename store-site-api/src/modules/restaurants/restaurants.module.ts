@@ -13,5 +13,6 @@ import { RestaurantRepository } from './repositories/restaurant.repository';
   ],
   controllers: [RestaurantsController],
   providers: [RestaurantsService, RestaurantRepository],
+  exports: [RestaurantsService],
 })
 export class RestaurantsModule {}

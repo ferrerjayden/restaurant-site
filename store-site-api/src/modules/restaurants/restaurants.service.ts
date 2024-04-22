@@ -22,6 +22,10 @@ export class RestaurantsService {
     return this.restaurantRepository.findById(restaurantId);
   }
 
+  async getOneRestaurantEnriched(restaurantId: ObjectId | string) {
+    return this.restaurantRepository.findByIdEnriched(restaurantId);
+  }
+
   async updateRestaurant(
     restaurantId: ObjectId | string,
     updateData: UpdateRestaurantDTO,
@@ -31,5 +35,12 @@ export class RestaurantsService {
 
   async deleteRestaurant(restaurantId: ObjectId | string) {
     return this.restaurantRepository.delete(restaurantId);
+  }
+
+  async updateRestaurantReviews(
+    restaurantId: ObjectId | string,
+    reviews: ObjectId[],
+  ) {
+    return this.restaurantRepository.updateReviews(restaurantId, reviews);
   }
 }

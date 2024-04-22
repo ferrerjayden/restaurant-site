@@ -8,4 +8,5 @@ export default interface RestaurantData {
   description: string;
   city: string;
   address: string;
+  reviews: ObjectId[];
 }

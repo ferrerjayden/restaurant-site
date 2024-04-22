@@ -27,6 +27,11 @@ export class RestaurantsController {
     return this.restaurantService.getOneRestaurant(restaurantId);
   }
 
+  @Get(':id/reviews')
+  async getRestaurantWithReviews(@Param('id') restaurantId: string) {
+    return this.restaurantService.getOneRestaurantEnriched(restaurantId);
+  }
+
   @Post()
   async createOne(@Body() createRestaurantData: CreateRestaurantDTO) {
     return this.restaurantService.createRestaurant(createRestaurantData);

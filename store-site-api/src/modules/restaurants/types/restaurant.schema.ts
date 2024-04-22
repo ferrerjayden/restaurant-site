@@ -3,6 +3,7 @@ import { ObjectId } from 'bson';
 import RestaurantData from './restaurant-interfaces';
 import { HydratedDocument } from 'mongoose';
 import mongoose from 'mongoose';
+import { Review } from 'src/modules/reviews/types/reviews.schema';
 
 export type RestaurantDocument = HydratedDocument<Restaurant>;
 
@@ -22,7 +23,7 @@ export class Restaurant implements RestaurantData {
 
   // should reference reviews model
   @Prop({
-    ref: 'Reviews',
+    ref: Review.name,
     type: [mongoose.Schema.Types.ObjectId],
     default: null,
   })
