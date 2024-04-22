@@ -1,17 +1,40 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
-import { CreateReviewDTO } from './types/review.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
 import { ReviewsService } from './reviews.service';
+import { ObjectId } from 'bson';
 
 @Controller('reviews')
 export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
-  // get all reviews for a restaurant id
-  // GET /reviews/:restaurantId
-  // update a review for a restaurant id
-  // PUT /reviews/:restaurantId
-  // delete a review for a restaurant id
-  // DELETE /reviews/:restaurantId
-  // create a review for a restaurant id
+
+  @Get(':reviewId')
+  async getReview(@Param('reviewId') reviewId: string) {
+    return this.reviewsService.getReview(reviewId);
+  }
+
+  @Patch(':reviewId')
+  async updateReview(
+    @Param('reviewId') reviewId: ObjectId | string,
+    @Body() updateReviewData: UpdateReviewDTO,
+  ) {
+    return this.reviewsService.updateReview(reviewId, updateReviewData);
+  }
+
+  @Delete(':reviewId/:restaurantId')
+  async deleteReview(
+    @Param('reviewId') reviewId: ObjectId,
+    @Param('restaurantId') restaurantId: ObjectId,
+  ) {
+    return this.reviewsService.deleteReview(reviewId, restaurantId);
+  }
 
   @Post(':restaurantId')
   async createReview(
@@ -23,7 +46,8 @@ export class ReviewsController {
       createReviewData,
     );
   }
+
   // get all reviews for a user id
   // might be useful for a user profile page, or when they are logged in and want to see all their reviews
-  // GET /reviews/user/:userId
+  // GET /reviews/user/:userName
 }

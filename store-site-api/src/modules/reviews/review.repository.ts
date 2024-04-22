@@ -3,9 +3,8 @@ import { Model } from 'mongoose';
 import { ObjectId } from 'bson';
 import { Injectable } from '@nestjs/common';
 import { Review, ReviewDocument } from './types/reviews.schema';
-import { CreateReviewDTO } from './types/review.dto';
+import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
 import { ReviewRO } from './types/review.ro';
-import { UpdateRestaurantDTO } from '../restaurants/types/restaurant.dto';
 
 @Injectable()
 export class ReviewsRepository {
@@ -28,7 +27,7 @@ export class ReviewsRepository {
 
   async update(
     id: ObjectId | string,
-    data: UpdateRestaurantDTO,
+    data: UpdateReviewDTO,
   ): Promise<ReviewRO> {
     return this.reviewModel.findByIdAndUpdate(id, data).exec();
   }
