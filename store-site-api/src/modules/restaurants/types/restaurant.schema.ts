@@ -3,7 +3,7 @@ import { ObjectId } from 'bson';
 import RestaurantData from './restaurant-interfaces';
 import { HydratedDocument } from 'mongoose';
 import mongoose from 'mongoose';
-import { Review } from 'src/modules/reviews/types/reviews.schema';
+import { Review } from '../../reviews/types/reviews.schema';
 
 export type RestaurantDocument = HydratedDocument<Restaurant>;
 

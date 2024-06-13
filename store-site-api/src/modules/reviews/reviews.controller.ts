@@ -38,7 +38,7 @@ export class ReviewsController {
 
   @Post(':restaurantId')
   async createReview(
-    @Param('restaurantId') restaurantId: string,
+    @Param('restaurantId') restaurantId: ObjectId,
     @Body() createReviewData: CreateReviewDTO,
   ) {
     return this.reviewsService.createReviewOnRestaurant(
