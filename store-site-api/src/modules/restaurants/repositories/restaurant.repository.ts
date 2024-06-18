@@ -1,6 +1,6 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Restaurant, RestaurantDocument } from '../types/restaurant.schema';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { ObjectId } from 'bson';
 import { Injectable } from '@nestjs/common';
 import RestaurantData from '../types/restaurant-interfaces';
@@ -48,5 +48,9 @@ export class RestaurantRepository {
       .findByIdAndUpdate(restaurantId, { reviews })
       .lean()
       .exec();
+  }
+
+  async findAllByFilter(filter: FilterQuery<RestaurantData>) {
+    return this.restaurantModel.find(filter).lean().exec();
   }
 }

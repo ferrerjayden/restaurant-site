@@ -4,10 +4,12 @@ import { AppService } from './app.service';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RestaurantsModule } from './modules/restaurants/restaurants.module';
+import { UsersModule } from './modules/users/users.module';
 @Module({
   imports: [
     RestaurantsModule,
     ReviewsModule,
+    UsersModule,
     MongooseModule.forRoot('mongodb://localhost:27017/store-site'),
   ],
   controllers: [AppController],

@@ -46,8 +46,4 @@ export class ReviewsController {
       createReviewData,
     );
   }
-
-  // get all reviews for a user id
-  // might be useful for a user profile page, or when they are logged in and want to see all their reviews
-  // GET /reviews/user/:userName
 }

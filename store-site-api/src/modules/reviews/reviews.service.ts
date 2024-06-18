@@ -63,4 +63,8 @@ export class ReviewsService {
       updatedReviews,
     );
   }
+
+  async getReviewsByUser(userIdentifier: ObjectId) {
+    return this.reviewsRepository.findAllByFilter({ user: userIdentifier });
+  }
 }

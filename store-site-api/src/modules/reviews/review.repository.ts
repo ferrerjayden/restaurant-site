@@ -35,4 +35,8 @@ export class ReviewsRepository {
   async delete(id: ObjectId | string): Promise<ReviewRO> {
     return this.reviewModel.findByIdAndDelete(id).lean().exec();
   }
+
+  async findAllByFilter(filter: any): Promise<ReviewRO[]> {
+    return this.reviewModel.find(filter).lean().exec();
+  }
 }

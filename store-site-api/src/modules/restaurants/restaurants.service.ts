@@ -43,4 +43,8 @@ export class RestaurantsService {
   ) {
     return this.restaurantRepository.updateReviews(restaurantId, reviews);
   }
+
+  async getRestaurantsByUser(userIdentifier: ObjectId) {
+    return this.restaurantRepository.findAllByFilter({ user: userIdentifier});
+  }
 }
