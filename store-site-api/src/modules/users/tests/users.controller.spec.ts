@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from '../users.controller';
 import { UsersService } from '../users.service';
-import { get } from 'http';
 import { ObjectId } from 'bson';
+import { UserDocument } from '../types/users.schema';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -74,10 +74,18 @@ describe('UsersController', () => {
   describe('register', () => {
     it("should call registerNewUser", async () => {
 
-      jest.spyOn(userService, 'registerNewUser').mockResolvedValueOnce(null)
+      const mockUser = {
+        userName: "testUser",
+        password: "testPassword",
+        email: "testEmail@gmail.com"
+      }
 
-      expect(await controller.register()).toBe(null)
-      expect(userService.registerNewUser).toHaveBeenCalled()
+
+
+      jest.spyOn(userService, 'registerNewUser').mockResolvedValueOnce(mockUser as UserDocument)
+
+      expect(await controller.register(mockUser)).toBe(mockUser)
+      expect(userService.registerNewUser).toHaveBeenCalledWith(mockUser)
     })
   })
 

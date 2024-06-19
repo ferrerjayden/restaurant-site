@@ -3,7 +3,8 @@ import { ObjectId } from 'bson';
 import { RestaurantsService } from '../restaurants/restaurants.service';
 import { ReviewsService } from '../reviews/reviews.service';
 import { UserRepository } from './user.repository';
-import { HttpErrorByCode } from '@nestjs/common/utils/http-error-by-code.util';
+import * as bcrypt from 'bcrypt';
+import CreateUserDTO from './types/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,8 +34,28 @@ export class UsersService {
         return user
     }
 
-    async registerNewUser() {
-        console.log("hi")
+    async registerNewUser(createUserData: CreateUserDTO) {
+
+        // check existing users and throw if duplicate
+        const existingUser = await this.usersRepository.findByFilter({userName: createUserData.userName})
+        const existingEmail = await this.usersRepository.findByFilter({email: createUserData.email})
+
+        if (existingUser || existingEmail) {
+            throw new HttpException("User already exists", 400)
+        }
+
+        const { password } = createUserData
+        // NOTE: 10 refers to the salt rounds
+        const hashSaltedPassword = await bcrypt.hash(password, 10)
+
+        const updatedUserData = {
+            ...createUserData,
+            password: hashSaltedPassword,
+            // always have default user role
+            role: ["user"]
+        }
+
+        return this.usersRepository.create(updatedUserData)
     }
 
     async loginUser() {

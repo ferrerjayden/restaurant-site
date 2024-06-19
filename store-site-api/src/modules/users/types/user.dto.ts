@@ -1,15 +1,11 @@
-import UserData from "./user-interfaces";
-
-export default interface CreateUserDTO extends UserData {
+export default interface CreateUserDTO {
     userName: string;
     email: string;
     password: string;
-    role: string[];
 }
 
-export default interface UpdateUserDTO extends UserData {
+export default interface UpdateUserDTO {
     userName: string;
     email: string;
     password: string;
-    role: string[];
 }

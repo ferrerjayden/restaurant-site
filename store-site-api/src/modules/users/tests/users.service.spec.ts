@@ -5,6 +5,11 @@ import { ReviewsService } from "../../reviews/reviews.service";
 import { ObjectId } from 'bson';
 import { UserRepository } from '../user.repository';
 import { UserDocument } from '../types/users.schema';
+import * as bcrypt from 'bcrypt';
+
+jest.mock('bcrypt', () => ({
+  hash: jest.fn().mockResolvedValue("aHashedPassword")
+}))
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -27,7 +32,8 @@ describe('UsersService', () => {
       }, {
         provide: UserRepository,
         useValue: {
-          findByFilter: jest.fn()
+          findByFilter: jest.fn(),
+          create: jest.fn()
         }
       }],
     }).compile();
@@ -86,6 +92,40 @@ describe('UsersService', () => {
 
       await expect(service.getUserDetails(mockUserName)).rejects.toThrow("User not found")
 
+    })
+  })
+
+  describe("registerNewUser", () => {
+    it("should hash the password, and call the user repository method create", async () => {
+      const mockUser = {
+        userName: "jaydeniskool123",
+        email: "test123",
+        password: "test123",
+      }
+
+      jest.spyOn(userRepository, "create").mockResolvedValue(mockUser as UserDocument)
+      jest.spyOn(userRepository, "findByFilter").mockResolvedValue(null)
+
+      await service.registerNewUser(mockUser)
+
+      expect(bcrypt.hash).toHaveBeenCalledWith(mockUser.password, 10)
+      expect(userRepository.create).toHaveBeenCalledWith({
+        ...mockUser,
+        password: "aHashedPassword",
+        role: ["user"]
+      })
+    })
+
+    it("should throw an error if a user with the same username already exists", async () => {
+      const mockUser = {
+        userName: "jaydeniskool123",
+        email: "test123",
+        password: "test123",
+      }
+
+      jest.spyOn(userRepository, "findByFilter").mockResolvedValue(mockUser as UserDocument)
+
+      await expect(service.registerNewUser(mockUser)).rejects.toThrow("User already exists")
     })
   })
 });
