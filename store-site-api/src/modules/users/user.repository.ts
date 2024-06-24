@@ -13,7 +13,8 @@ export class UserRepository {
 
     // check the type on UserData
     async findByFilter(filter: FilterQuery<UserData>) {
-        return this.userModel.findOne(filter).lean().exec();
+        const user = await this.userModel.findOne(filter).lean().exec();
+        return user;
     }
 
     async create(createUserDto: CreateUserDTO) {

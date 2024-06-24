@@ -6,12 +6,14 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   CreateRestaurantDTO,
   UpdateRestaurantDTO,
 } from './types/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -33,11 +35,13 @@ export class RestaurantsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createOne(@Body() createRestaurantData: CreateRestaurantDTO) {
     return this.restaurantService.createRestaurant(createRestaurantData);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   async updateOne(
     @Param('id') restaurantId: string,
     @Body() updateRestaurantData: UpdateRestaurantDTO,
@@ -49,6 +53,7 @@ export class RestaurantsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async deleteOne(@Param('id') restaurantId: string) {
     return this.restaurantService.deleteRestaurant(restaurantId);
   }

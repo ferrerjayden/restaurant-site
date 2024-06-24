@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
 import { ReviewsService } from './reviews.service';
 import { ObjectId } from 'bson';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -21,6 +23,7 @@ export class ReviewsController {
   }
 
   @Patch(':reviewId')
+  @UseGuards(JwtAuthGuard)
   async updateReview(
     @Param('reviewId') reviewId: ObjectId | string,
     @Body() updateReviewData: UpdateReviewDTO,
@@ -29,6 +32,7 @@ export class ReviewsController {
   }
 
   @Delete(':reviewId/:restaurantId')
+  @UseGuards(JwtAuthGuard)
   async deleteReview(
     @Param('reviewId') reviewId: ObjectId,
     @Param('restaurantId') restaurantId: ObjectId,
@@ -36,7 +40,14 @@ export class ReviewsController {
     return this.reviewsService.deleteReview(reviewId, restaurantId);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('helloprotected')
+  async helloProtected() {
+    return 'Hello from protected route!';
+  }
+
   @Post(':restaurantId')
+  @UseGuards(JwtAuthGuard)
   async createReview(
     @Param('restaurantId') restaurantId: ObjectId,
     @Body() createReviewData: CreateReviewDTO,
@@ -46,4 +57,5 @@ export class ReviewsController {
       createReviewData,
     );
   }
+
 }

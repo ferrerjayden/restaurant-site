@@ -57,13 +57,4 @@ export class UsersService {
 
         return this.usersRepository.create(updatedUserData)
     }
-
-    async loginUser() {
-        console.log("hi")
-    }
-
-    async logOutUser() {
-        console.log("hi")
-    }
-
 }

@@ -11,6 +11,7 @@ import { User, UserSchema } from './types/users.schema';
 @Module({
   imports: [RestaurantsModule, ReviewsModule, MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   providers: [UsersService, UserRepository],
-  controllers: [UsersController]
+  controllers: [UsersController],
+  exports: [UsersService]
 })
 export class UsersModule {}
