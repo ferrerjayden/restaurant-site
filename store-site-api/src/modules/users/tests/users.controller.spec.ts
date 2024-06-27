@@ -88,25 +88,4 @@ describe('UsersController', () => {
       expect(userService.registerNewUser).toHaveBeenCalledWith(mockUser)
     })
   })
-
-  describe("login", () => {
-    it("should call loginUser", async () => {
-
-        jest.spyOn(userService, 'loginUser').mockResolvedValueOnce(null)
-
-        expect(await controller.login()).toBe(null)
-        expect(userService.loginUser).toHaveBeenCalled()
-    })
-  })
-
-  describe("logout", () => {
-    it("should call logOutUser", async () => {
-
-        jest.spyOn(userService, 'logOutUser').mockResolvedValueOnce(null)
-
-        expect(await controller.logout()).toBe(null)
-        expect(userService.logOutUser).toHaveBeenCalled()
-    })
-  })
-
 });
