@@ -2,9 +2,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ObjectId } from 'bson';
 import { Injectable } from '@nestjs/common';
-import { Review, ReviewDocument } from './types/reviews.schema';
-import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
-import { ReviewRO } from './types/review.ro';
+import { Review, ReviewDocument } from '../types/reviews.schema';
+import { CreateReviewDTO, UpdateReviewDTO } from '../types/review.dto';
+import { ReviewRO } from '../types/review.ro';
 
 @Injectable()
 export class ReviewsRepository {

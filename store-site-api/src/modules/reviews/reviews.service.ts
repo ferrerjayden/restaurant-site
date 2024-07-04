@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ObjectId } from 'bson';
 import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
-import { ReviewsRepository } from './review.repository';
+import { ReviewsRepository } from './repositories/review.repository';
 import { RestaurantsService } from '../restaurants/restaurants.service';
 
 @Injectable()

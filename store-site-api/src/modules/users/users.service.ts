@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { ObjectId } from 'bson';
 import { RestaurantsService } from '../restaurants/restaurants.service';
 import { ReviewsService } from '../reviews/reviews.service';
-import { UserRepository } from './user.repository';
+import { UserRepository } from './repositories/user.repository';
 import * as bcrypt from 'bcrypt';
 import CreateUserDTO from './types/user.dto';
 
