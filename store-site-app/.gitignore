@@ -1,7 +1,4 @@
-store-site-api/node_modules
-store-site-app/node_modules
-store-site-api/dist
-
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
