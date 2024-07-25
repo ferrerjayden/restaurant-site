@@ -35,7 +35,7 @@ export class RestaurantsController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   async createOne(@Body() createRestaurantData: CreateRestaurantDTO) {
     return this.restaurantService.createRestaurant(createRestaurantData);
   }

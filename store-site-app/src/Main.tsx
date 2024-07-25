@@ -5,6 +5,8 @@ import Restaurants from './pages/Restaurants';
 import Contact from './pages/Contact';
 import Profile from './pages/Profile';
 import Default from './pages/Default';
+import { CreateRestaurant } from './pages/restaurants/CreateRestaurant';
+import { ViewRestaurant } from './pages/restaurants/ViewRestaurant';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
           <Route path="/contact" element={<Contact/>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="*" element={<Default/>}/>
+          <Route path="/restaurants/create" element={<CreateRestaurant/>}/>
+          <Route path="/restaurants/view/:id" element={<ViewRestaurant/>}/>
+        {/* route to visit restaurant, route to edit restaurant */}
         </Routes>
     </BrowserRouter>
   );
