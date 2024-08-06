@@ -1,12 +1,21 @@
 import MainNav from "../../components/main-nav/MainNav";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchRestaurantWithReview } from "../../api/restaurants/req-methods";
 import { Box, Button, Card, CardContent, Container, Grid, Rating, Typography } from "@mui/material";
 
 export function ViewRestaurant() {
+
+
     const { id } = useParams()
     const { data: restaurant, isLoading, error } = useQuery({ queryKey: ["fetchRestaurantWithReviews"], queryFn: async () => await fetchRestaurantWithReview(id as string) })
+  const navigate = useNavigate()
+
+    const handleClick = (restaurantId: string) => {
+      console.log("Add Review")
+      navigate(`/restaurants/${restaurantId}/reviews/create`)
+    }
+
    return (
     <>
     <MainNav/>
@@ -38,7 +47,7 @@ export function ViewRestaurant() {
             </CardContent>
           </Card>
         ))}
-         <Button color="primary">Add Review</Button>
+         <Button color="primary" onClick={() => { handleClick(id as string)}}>Add Review</Button>
       </Grid>
 
     </Grid>

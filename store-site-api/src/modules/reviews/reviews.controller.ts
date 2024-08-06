@@ -47,7 +47,7 @@ export class ReviewsController {
   }
 
   @Post(':restaurantId')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   async createReview(
     @Param('restaurantId') restaurantId: ObjectId,
     @Body() createReviewData: CreateReviewDTO,

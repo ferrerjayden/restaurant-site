@@ -29,4 +29,14 @@ const fetchRestaurantWithReview = async (restaurantId: string) => {
         throw err;
     }
 }
-export {fetchRestaurants, createRestaurant, fetchRestaurantWithReview}
+
+const createReview = async (restaurantId: string, formData: any) => {
+    try {
+        const response = await axiosInstance.post(`reviews/${restaurantId}`, formData)
+        return response.data
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+export {fetchRestaurants, createRestaurant, fetchRestaurantWithReview, createReview}

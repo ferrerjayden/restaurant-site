@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Default from './pages/Default';
 import { CreateRestaurant } from './pages/restaurants/CreateRestaurant';
 import { ViewRestaurant } from './pages/restaurants/ViewRestaurant';
+import { CreateReview } from './pages/reviews/CreateReview';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="*" element={<Default/>}/>
           <Route path="/restaurants/create" element={<CreateRestaurant/>}/>
           <Route path="/restaurants/view/:id" element={<ViewRestaurant/>}/>
+          <Route path="/restaurants/:restaurantId/reviews/create" element={<CreateReview/>}/>
         {/* route to visit restaurant, route to edit restaurant */}
         </Routes>
     </BrowserRouter>
