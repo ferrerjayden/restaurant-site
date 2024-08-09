@@ -10,6 +10,16 @@ const fetchRestaurants = async () => {
     }
 }
 
+const getRestaurant = async (restaurantId: string) => {
+    try {
+        const response = await axiosInstance.get(`restaurants/${restaurantId}`);
+        return response.data
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}
+
 const createRestaurant = async (formData: any) => {
     try {
         const response = await axiosInstance.post("restaurants", formData);
@@ -39,4 +49,59 @@ const createReview = async (restaurantId: string, formData: any) => {
         throw err;
     }
 }
-export {fetchRestaurants, createRestaurant, fetchRestaurantWithReview, createReview}
+
+const deleteRestaurant = async (restaurantId: string) => {
+    try {
+        const response = await axiosInstance.delete(`restaurants/${restaurantId}`)
+        return response.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}
+
+const updateRestaurant = async (restaurantId: string, formData: any) => {
+    try {
+        const response = await axiosInstance.patch(`restaurants/${restaurantId}`, formData)
+        return response.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}
+
+
+const deleteReviewFromRestaurant = async (reviewId: string, restaurantId: string) => {
+    try {
+        const response = await axiosInstance.delete(`reviews/${reviewId}/${restaurantId}`)
+        return response.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}
+
+const updateReviewOnRestaurant = async (reviewId: string, formData: any) => {
+
+    console.log(reviewId, "inside")
+    try {
+        const response = await axiosInstance.patch(`reviews/${reviewId}`, formData)
+        return response.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}
+
+const getReview = async (reviewId: string) => {
+    try {
+        const response = await axiosInstance.get(`reviews/${reviewId}`)
+        return response.data
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}
+
+
+export {fetchRestaurants, createRestaurant, fetchRestaurantWithReview, createReview, deleteRestaurant, updateRestaurant, getRestaurant, deleteReviewFromRestaurant, updateReviewOnRestaurant, getReview}

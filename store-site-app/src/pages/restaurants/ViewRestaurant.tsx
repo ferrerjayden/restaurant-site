@@ -1,19 +1,45 @@
 import MainNav from "../../components/main-nav/MainNav";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchRestaurantWithReview } from "../../api/restaurants/req-methods";
+import { deleteRestaurant, deleteReviewFromRestaurant, fetchRestaurantWithReview } from "../../api/restaurants/req-methods";
 import { Box, Button, Card, CardContent, Container, Grid, Rating, Typography } from "@mui/material";
 
 export function ViewRestaurant() {
 
 
     const { id } = useParams()
-    const { data: restaurant, isLoading, error } = useQuery({ queryKey: ["fetchRestaurantWithReviews"], queryFn: async () => await fetchRestaurantWithReview(id as string) })
+    const { data: restaurant, isLoading, error } = useQuery({ queryKey: ["fetchRestaurantWithReviews", id], queryFn: async () => await fetchRestaurantWithReview(id as string) })
+
+    const deleteMutation = useMutation<any, unknown, any>({
+        mutationFn: (restaurantId) => deleteRestaurant(restaurantId)
+     })
+
+      const deleteReviewMutation = useMutation<any, unknown, any>({
+        mutationFn: ({reviewId, restaurantId}: {reviewId: string, restaurantId: string}) => { return deleteReviewFromRestaurant(reviewId, restaurantId)}
+      })
+
+
   const navigate = useNavigate()
 
     const handleClick = (restaurantId: string) => {
-      console.log("Add Review")
       navigate(`/restaurants/${restaurantId}/reviews/create`)
+    }
+
+    const handleDelete = (restaurantId: string) => {
+      deleteMutation.mutate(restaurantId)
+      navigate("/restaurants")
+    }
+
+    const handleUpdate = (restaurantId: string) => {
+      navigate(`/restaurants/update/${restaurantId}`)
+    }
+
+    const handleUpdateReview = (reviewId: string) => {
+      navigate(`/reviews/update/${reviewId}`)
+    }
+
+    const handleDeleteReview = (reviewId: string, restaurantId: string) => {
+      deleteReviewMutation.mutate({reviewId, restaurantId})
     }
 
    return (
@@ -29,10 +55,8 @@ export function ViewRestaurant() {
         <Typography variant="body1" gutterBottom>{restaurant.description}</Typography>
         <Typography variant="subtitle1">{restaurant.city}</Typography>
         <Typography variant="subtitle1">{restaurant.address}</Typography>
-        <Box>
-          <Typography component="legend">Rating</Typography>
-          <Rating name="read-only" value={4.5} readOnly /> {/* Placeholder for the rating */}
-        </Box>
+        <Button color="error" onClick={() => {handleDelete(restaurant._id)}}>Delete</Button>
+        <Button color="info" onClick={() => {handleUpdate(restaurant._id)}}>Edit</Button>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h5" gutterBottom>Reviews</Typography>
@@ -44,6 +68,8 @@ export function ViewRestaurant() {
               <Typography variant="body2" gutterBottom>{review.comment}</Typography>
               <Rating name="read-only" value={review.rating} readOnly />
               <Typography variant="body2">By {review.user}</Typography>
+              <Button color="info" onClick={() => { handleUpdateReview(review._id)}}>Edit</Button>
+              <Button color="error" onClick={() => {handleDeleteReview(review._id, restaurant._id)}}>Delete</Button>
             </CardContent>
           </Card>
         ))}

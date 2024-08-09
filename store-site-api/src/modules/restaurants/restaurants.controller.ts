@@ -41,7 +41,7 @@ export class RestaurantsController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+ // @UseGuards(JwtAuthGuard)
   async updateOne(
     @Param('id') restaurantId: string,
     @Body() updateRestaurantData: UpdateRestaurantDTO,
@@ -53,7 +53,7 @@ export class RestaurantsController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   async deleteOne(@Param('id') restaurantId: string) {
     return this.restaurantService.deleteRestaurant(restaurantId);
   }

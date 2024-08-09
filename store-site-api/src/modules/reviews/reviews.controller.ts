@@ -23,7 +23,7 @@ export class ReviewsController {
   }
 
   @Patch(':reviewId')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   async updateReview(
     @Param('reviewId') reviewId: ObjectId | string,
     @Body() updateReviewData: UpdateReviewDTO,
@@ -32,7 +32,7 @@ export class ReviewsController {
   }
 
   @Delete(':reviewId/:restaurantId')
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   async deleteReview(
     @Param('reviewId') reviewId: ObjectId,
     @Param('restaurantId') restaurantId: ObjectId,

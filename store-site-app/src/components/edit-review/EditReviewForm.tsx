@@ -1,19 +1,45 @@
-import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { createReview } from "../../api/restaurants/req-methods";
-import { useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { getReview, updateRestaurant, updateReviewOnRestaurant } from "../../api/restaurants/req-methods"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Box, Button, FormControl, TextField, Typography } from "@mui/material"
 
-export function CreateReviewForm () {
+export function EditReviewForm () {
 
-    const { restaurantId } = useParams()
-     const [formData, setFormData] = useState({})
+    const navigate = useNavigate()
+    const { reviewId } = useParams()
 
-     const mutation = useMutation<any, unknown, any>({
-        mutationFn: (formData) => createReview(restaurantId as string, formData)
-     })
 
-      const handleChange = (e: any) => {
+    console.log(reviewId)
+    const { data, error, isLoading} = useQuery({ queryKey: ["getReview", reviewId], queryFn: async () => await getReview(reviewId as string) })
+
+
+    console.log(reviewId, "hi")
+    const updateReviewMutation = useMutation<any, unknown, any>({
+    mutationFn: ({formData, reviewId}: {formData: any, reviewId: string}) => {
+        console.log(reviewId, "sup")
+        return updateReviewOnRestaurant(reviewId as string, formData)}
+    })
+
+     const [formData, setFormData] = useState({
+        title: "",
+        comment: "",
+        rating: "",
+    })
+
+    useEffect(() => {
+        if (data) {
+            setFormData({
+                title: data.title,
+                comment: data.comment,
+                rating: data.rating
+            })
+        }
+    }, [data])
+
+
+
+    const handleChange = (e: any) => {
         const { name, value } = e.target
          setFormData(prevState => ({
             ...prevState,
@@ -23,13 +49,14 @@ export function CreateReviewForm () {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        mutation.mutate(formData)
+        updateReviewMutation.mutate({formData, reviewId})
+        navigate(-1)
+        // console.log(formData)
     }
 
 
-
     return (
-          <Box
+        <Box
             sx={{
                 display: 'grid',
                 placeItems: 'center',
@@ -59,18 +86,21 @@ export function CreateReviewForm () {
             <TextField
               label="Title"
               name="title"
+              value={formData.title}
               onChange={handleChange}
               fullWidth
             />
             <TextField
               label="Comment"
               name="comment"
+              value={formData.comment}
               onChange={handleChange}
               fullWidth
             />
             <TextField
               label="Rating"
               name="rating"
+              value={formData.rating}
               onChange={handleChange}
               fullWidth
             />
