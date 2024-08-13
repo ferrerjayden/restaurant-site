@@ -9,15 +9,10 @@ export function EditReviewForm () {
     const navigate = useNavigate()
     const { reviewId } = useParams()
 
-
-    console.log(reviewId)
     const { data, error, isLoading} = useQuery({ queryKey: ["getReview", reviewId], queryFn: async () => await getReview(reviewId as string) })
 
-
-    console.log(reviewId, "hi")
     const updateReviewMutation = useMutation<any, unknown, any>({
     mutationFn: ({formData, reviewId}: {formData: any, reviewId: string}) => {
-        console.log(reviewId, "sup")
         return updateReviewOnRestaurant(reviewId as string, formData)}
     })
 
@@ -51,7 +46,6 @@ export function EditReviewForm () {
         e.preventDefault()
         updateReviewMutation.mutate({formData, reviewId})
         navigate(-1)
-        // console.log(formData)
     }
 
 
