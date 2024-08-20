@@ -67,7 +67,7 @@ export function ViewRestaurant() {
               <Typography variant="h6">{review.title}</Typography>
               <Typography variant="body2" gutterBottom>{review.comment}</Typography>
               <Rating name="read-only" value={review.rating} readOnly />
-              <Typography variant="body2">By {review.user}</Typography>
+              <Typography variant="body2">By {review.user.username}</Typography>
               <Button color="info" onClick={() => { handleUpdateReview(review._id)}}>Edit</Button>
               <Button color="error" onClick={() => {handleDeleteReview(review._id, restaurant._id)}}>Delete</Button>
             </CardContent>

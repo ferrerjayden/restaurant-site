@@ -1,11 +1,11 @@
 export default interface CreateUserDTO {
-    userName: string;
+    username: string;
     email: string;
     password: string;
 }
 
 export default interface UpdateUserDTO {
-    userName: string;
+    username: string;
     email: string;
     password: string;
 }

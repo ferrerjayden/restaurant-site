@@ -75,7 +75,7 @@ describe('UsersController', () => {
     it("should call registerNewUser", async () => {
 
       const mockUser = {
-        userName: "testUser",
+        username: "testUser",
         password: "testPassword",
         email: "testEmail@gmail.com"
       }

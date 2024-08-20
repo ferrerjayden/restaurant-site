@@ -10,8 +10,11 @@ import { ViewRestaurant } from './pages/restaurants/ViewRestaurant';
 import { CreateReview } from './pages/reviews/CreateReview';
 import { EditRestaurant } from './pages/restaurants/EditRestaurant';
 import { EditReview } from './pages/reviews/EditReview';
+import { Register } from './pages/auth/Register';
+import { Login } from './pages/auth/Login';
 
 function App() {
+
   return (
     <BrowserRouter>
         <Routes>
@@ -27,7 +30,8 @@ function App() {
           <Route path="/restaurants/:restaurantId/reviews/create" element={<CreateReview/>}/>
           <Route path="/restaurants/update/:restaurantId" element={<EditRestaurant/>}/>
           <Route path="/reviews/update/:reviewId" element={<EditReview/>}/>
-        {/* route to visit restaurant, route to edit restaurant */}
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/login" element={<Login/>}/>
         </Routes>
     </BrowserRouter>
   );

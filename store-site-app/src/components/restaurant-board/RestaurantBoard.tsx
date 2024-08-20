@@ -13,7 +13,7 @@ const StyledLink = styled(Link)`
 export function RestaurantBoard() {
     const { data, error, isLoading } = useQuery({ queryKey: ["restaurants"], queryFn: async () => await fetchRestaurants() })
     const location = useLocation()
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
@@ -36,7 +36,9 @@ export function RestaurantBoard() {
 
     return (
         <Box>
+             { !data.length && <Typography>There is no restaurants to view!</Typography>}
             <Box sx={{marginLeft: "150px", boxShadow: 3, width: "85%", marginTop: "20px"}}>
+
             { data &&
 
                 paginatedData.map((restaurant: any) => (
@@ -51,8 +53,7 @@ export function RestaurantBoard() {
                                 {restaurant.description}
                             </Typography>
                         </CardContent>
-                    </Card>
-                    </ButtonBase>))}
+                    </Card></ButtonBase>))}
 
             </Box>
            <StyledLink to={`${location.pathname}/create`}>

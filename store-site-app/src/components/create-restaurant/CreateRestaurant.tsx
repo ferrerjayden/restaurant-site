@@ -87,7 +87,7 @@ export function CreateRestaurantForm () {
           <Button
             type="submit"
             onClick={handleSubmit}
-            sx={{ mt: 2, width: '100%', backgroundColor: '#403d3d', color: "white", fontWeight: 800 }}
+
           >
             Submit
           </Button>

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import {
   CreateRestaurantDTO,
   UpdateRestaurantDTO,
@@ -29,11 +29,34 @@ export class RestaurantsService {
   async updateRestaurant(
     restaurantId: ObjectId | string,
     updateData: UpdateRestaurantDTO,
+    user: any,
   ) {
+
+    const restaurant = await this.restaurantRepository.findById(restaurantId)
+
+    if (!restaurant) {
+      throw new NotFoundException("Restaurant not found")
+    }
+
+    if (!restaurant.user.equals(ObjectId.createFromHexString(user.userId))) {
+      throw new UnauthorizedException("You do not have permission to update this restaurant!")
+    }
+
     return this.restaurantRepository.update(restaurantId, updateData);
   }
 
-  async deleteRestaurant(restaurantId: ObjectId | string) {
+  async deleteRestaurant(restaurantId: ObjectId | string, user: any) {
+
+    const restaurant = await this.restaurantRepository.findById(restaurantId)
+
+    if (!restaurant) {
+      throw new NotFoundException("Restaurant not found")
+    }
+
+    if (!restaurant.user.equals(ObjectId.createFromHexString(user.userId))) {
+      throw new UnauthorizedException("You do not have permission to delete this restaurant!")
+    }
+
     return this.restaurantRepository.delete(restaurantId);
   }
 

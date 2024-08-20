@@ -9,4 +9,5 @@ export default interface RestaurantData {
   city: string;
   address: string;
   reviews: ObjectId[];
+  user: ObjectId;
 }

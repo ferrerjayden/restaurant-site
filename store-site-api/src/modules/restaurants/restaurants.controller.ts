@@ -14,6 +14,8 @@ import {
 } from './types/restaurant.dto';
 import { RestaurantsService } from './restaurants.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GetUser } from '../users/users.decorator';
+import { ObjectId } from 'bson';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -35,26 +37,28 @@ export class RestaurantsController {
   }
 
   @Post()
-  //@UseGuards(JwtAuthGuard)
-  async createOne(@Body() createRestaurantData: CreateRestaurantDTO) {
-    return this.restaurantService.createRestaurant(createRestaurantData);
+  @UseGuards(JwtAuthGuard)
+  async createOne(@GetUser() user: any, @Body() createRestaurantData: CreateRestaurantDTO) {
+    return this.restaurantService.createRestaurant({ user: ObjectId.createFromHexString(user.userId), ...createRestaurantData});
   }
 
   @Patch(':id')
- // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async updateOne(
+    @GetUser() user: any,
     @Param('id') restaurantId: string,
     @Body() updateRestaurantData: UpdateRestaurantDTO,
   ) {
     return this.restaurantService.updateRestaurant(
       restaurantId,
       updateRestaurantData,
+      user
     );
   }
 
   @Delete(':id')
-  //@UseGuards(JwtAuthGuard)
-  async deleteOne(@Param('id') restaurantId: string) {
-    return this.restaurantService.deleteRestaurant(restaurantId);
+  @UseGuards(JwtAuthGuard)
+  async deleteOne(@GetUser() user: any, @Param('id') restaurantId: string) {
+    return this.restaurantService.deleteRestaurant(restaurantId, user);
   }
 }

@@ -25,7 +25,7 @@ export class UsersService {
 
     async getUserDetails(userId: string)
     {
-        const user = await this.usersRepository.findByFilter({userName: userId})
+        const user = await this.usersRepository.findByFilter({username: userId})
 
         if (!user) {
             throw new HttpException("User not found", 404)
@@ -37,7 +37,7 @@ export class UsersService {
     async registerNewUser(createUserData: CreateUserDTO) {
 
         // check existing users and throw if duplicate
-        const existingUser = await this.usersRepository.findByFilter({userName: createUserData.userName})
+        const existingUser = await this.usersRepository.findByFilter({username: createUserData.username})
         const existingEmail = await this.usersRepository.findByFilter({email: createUserData.email})
 
         if (existingUser || existingEmail) {

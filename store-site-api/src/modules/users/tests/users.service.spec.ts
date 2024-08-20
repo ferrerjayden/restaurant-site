@@ -75,14 +75,14 @@ describe('UsersService', () => {
       const mockUserName = "jaydeniskool123"
 
       const mockUser = {
-        userName: "mockUserName",
+        username: "mockUserName",
         email: "sup@gmail.com"
       }
 
       jest.spyOn(userRepository, "findByFilter").mockResolvedValue(mockUser as UserDocument)
 
       expect(await service.getUserDetails(mockUserName)).toBe(mockUser)
-      expect(userRepository.findByFilter).toHaveBeenCalledWith({userName: mockUserName})
+      expect(userRepository.findByFilter).toHaveBeenCalledWith({username: mockUserName})
     })
 
     it("should throw an error if a user is not found", async () => {
@@ -98,7 +98,7 @@ describe('UsersService', () => {
   describe("registerNewUser", () => {
     it("should hash the password, and call the user repository method create", async () => {
       const mockUser = {
-        userName: "jaydeniskool123",
+        username: "jaydeniskool123",
         email: "test123",
         password: "test123",
       }
@@ -118,7 +118,7 @@ describe('UsersService', () => {
 
     it("should throw an error if a user with the same username already exists", async () => {
       const mockUser = {
-        userName: "jaydeniskool123",
+        username: "jaydeniskool123",
         email: "test123",
         password: "test123",
       }

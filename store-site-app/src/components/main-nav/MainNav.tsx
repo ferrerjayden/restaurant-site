@@ -10,7 +10,7 @@ const StyledLink = styled(Link)`
 
 
 const pages = ['Home', 'About', 'Restaurants', 'Contact']
-const settings = ['Profile', 'Log out']
+const settings = ['Profile', 'Register', 'Login', 'Logout']
 
 const MainNav = () => {
     const [anchorUserBox, setAnchorUserBox] = useState<null | HTMLElement>(null);
@@ -58,15 +58,15 @@ const MainNav = () => {
                     </IconButton>
                 </Tooltip>
                 <Menu
-                    sx={{marginLeft: "100px"}}
+                    sx={{marginRight: "100px"}}
                     anchorOrigin={{
                         vertical: 'top',
-                        horizontal: 'right',
+                        horizontal: 'left',
                     }}
                     keepMounted
                     transformOrigin={{
                         vertical: 'top',
-                        horizontal: 'right'
+                        horizontal: 'left'
                     }}
                     open={Boolean(anchorUserBox)}
                     onClose={handleCloseUserMenu}

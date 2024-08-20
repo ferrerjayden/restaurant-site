@@ -1,5 +1,5 @@
 export default interface UserData {
-    userName: string,
+    username: string,
     email: string,
     password: string,
     role: string[],

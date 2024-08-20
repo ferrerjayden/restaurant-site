@@ -12,6 +12,7 @@ import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
 import { ReviewsService } from './reviews.service';
 import { ObjectId } from 'bson';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GetUser } from '../users/users.decorator';
 
 @Controller('reviews')
 export class ReviewsController {
@@ -23,21 +24,23 @@ export class ReviewsController {
   }
 
   @Patch(':reviewId')
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async updateReview(
+    @GetUser() user: any,
     @Param('reviewId') reviewId: ObjectId | string,
     @Body() updateReviewData: UpdateReviewDTO,
   ) {
-    return this.reviewsService.updateReview(reviewId, updateReviewData);
+    return this.reviewsService.updateReview(reviewId, updateReviewData, user);
   }
 
   @Delete(':reviewId/:restaurantId')
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async deleteReview(
+    @GetUser() user: any,
     @Param('reviewId') reviewId: ObjectId,
     @Param('restaurantId') restaurantId: ObjectId,
   ) {
-    return this.reviewsService.deleteReview(reviewId, restaurantId);
+    return this.reviewsService.deleteReview(reviewId, restaurantId, user);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -47,14 +50,15 @@ export class ReviewsController {
   }
 
   @Post(':restaurantId')
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async createReview(
+    @GetUser() user: any,
     @Param('restaurantId') restaurantId: ObjectId,
     @Body() createReviewData: CreateReviewDTO,
   ) {
     return this.reviewsService.createReviewOnRestaurant(
       restaurantId,
-      createReviewData,
+      {user: ObjectId.createFromHexString(user.userId), ...createReviewData},
     );
   }
 

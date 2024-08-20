@@ -25,7 +25,12 @@ export class RestaurantRepository {
   }
 
   async findByIdEnriched(id: ObjectId | string): Promise<RestaurantData> {
-    return this.restaurantModel.findById(id).populate('reviews').lean().exec();
+    return this.restaurantModel.findById(id).populate({
+                path: 'reviews',
+                populate: {
+                    path: 'user'
+                }
+            }).lean().exec();
   }
 
   async create(data: CreateRestaurantDTO): Promise<RestaurantData> {

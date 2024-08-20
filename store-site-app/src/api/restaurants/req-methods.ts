@@ -82,8 +82,6 @@ const deleteReviewFromRestaurant = async (reviewId: string, restaurantId: string
 }
 
 const updateReviewOnRestaurant = async (reviewId: string, formData: any) => {
-
-    console.log(reviewId, "inside")
     try {
         const response = await axiosInstance.patch(`reviews/${reviewId}`, formData)
         return response.data

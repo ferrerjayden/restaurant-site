@@ -45,7 +45,6 @@ export function EditRestaurantForm() {
         e.preventDefault()
         mutation.mutate(formData)
         navigate(`/restaurants/view/${restaurantId}`)
-        console.log(formData)
     }
 
     return (
