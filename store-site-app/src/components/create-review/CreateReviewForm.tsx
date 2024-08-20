@@ -1,16 +1,22 @@
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { createReview } from "../../api/restaurants/req-methods";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function CreateReviewForm () {
 
     const { restaurantId } = useParams()
+    const navigate = useNavigate()
      const [formData, setFormData] = useState({})
 
+     const queryClient = useQueryClient()
+
      const mutation = useMutation<any, unknown, any>({
-        mutationFn: (formData) => createReview(restaurantId as string, formData)
+        mutationFn: (formData) => createReview(restaurantId as string, formData),
+        onSuccess: () => {
+          queryClient.refetchQueries()
+        }
      })
 
       const handleChange = (e: any) => {
@@ -23,6 +29,7 @@ export function CreateReviewForm () {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
+        navigate(`/restaurants/view/${restaurantId}`)
         mutation.mutate(formData)
     }
 

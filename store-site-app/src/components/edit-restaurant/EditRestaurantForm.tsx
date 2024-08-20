@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
 import MainNav from "../main-nav/MainNav";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRestaurant, updateRestaurant } from "../../api/restaurants/req-methods";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -11,8 +11,12 @@ export function EditRestaurantForm() {
     const { restaurantId } = useParams()
     const { data, error, isLoading } = useQuery({ queryKey: ["getRestaurants", restaurantId], queryFn: async () => await getRestaurant(restaurantId as string) })
 
+    const queryClient = useQueryClient()
     const mutation = useMutation<any, unknown, any>({
-        mutationFn: (formData: any) => updateRestaurant(restaurantId as string, formData)
+        mutationFn: (formData: any) => updateRestaurant(restaurantId as string, formData),
+        onSuccess: () => {
+          queryClient.refetchQueries()
+        }
     })
 
     const [formData, setFormData] = useState({

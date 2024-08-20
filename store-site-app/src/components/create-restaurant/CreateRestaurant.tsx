@@ -1,14 +1,19 @@
 import { Alert, Box, Button, FormControl, TextField, Typography } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { createRestaurant } from "../../api/restaurants/req-methods";
 import { useNavigate } from "react-router-dom";
 
 export function CreateRestaurantForm () {
 
+   const queryClient = useQueryClient()
+
     const navigate = useNavigate()
     const mutation = useMutation<any, unknown, any>({
-        mutationFn: (formData) => createRestaurant(formData)
+        mutationFn: (formData) => createRestaurant(formData),
+        onSuccess: () => {
+          queryClient.refetchQueries()
+        }
     })
 
     const [formData, setFormData] = useState({

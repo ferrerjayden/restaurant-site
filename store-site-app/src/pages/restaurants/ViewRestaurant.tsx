@@ -1,5 +1,5 @@
 import MainNav from "../../components/main-nav/MainNav";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteRestaurant, deleteReviewFromRestaurant, fetchRestaurantWithReview } from "../../api/restaurants/req-methods";
 import { Box, Button, Card, CardContent, Container, Grid, Rating, Typography } from "@mui/material";
@@ -10,12 +10,20 @@ export function ViewRestaurant() {
     const { id } = useParams()
     const { data: restaurant, isLoading, error } = useQuery({ queryKey: ["fetchRestaurantWithReviews", id], queryFn: async () => await fetchRestaurantWithReview(id as string) })
 
+    const queryClient = useQueryClient()
+
     const deleteMutation = useMutation<any, unknown, any>({
-        mutationFn: (restaurantId) => deleteRestaurant(restaurantId)
+        mutationFn: (restaurantId) => deleteRestaurant(restaurantId),
+        onSuccess: () => {
+          queryClient.refetchQueries()
+        }
      })
 
       const deleteReviewMutation = useMutation<any, unknown, any>({
-        mutationFn: ({reviewId, restaurantId}: {reviewId: string, restaurantId: string}) => { return deleteReviewFromRestaurant(reviewId, restaurantId)}
+        mutationFn: ({reviewId, restaurantId}: {reviewId: string, restaurantId: string}) => { return deleteReviewFromRestaurant(reviewId, restaurantId)},
+        onSuccess: () => {
+          queryClient.refetchQueries()
+        }
       })
 
 

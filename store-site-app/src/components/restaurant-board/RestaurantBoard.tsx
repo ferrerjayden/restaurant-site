@@ -1,6 +1,6 @@
 
 import { Box, Button, ButtonBase, Card, CardActions, CardContent, CardMedia, Pagination, styled, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { QueryCache, useQuery } from "@tanstack/react-query";
 import { fetchRestaurants } from "../../api/restaurants/req-methods";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ const StyledLink = styled(Link)`
 
 
 export function RestaurantBoard() {
-    const { data, error, isLoading } = useQuery({ queryKey: ["restaurants"], queryFn: async () => await fetchRestaurants() })
+    const { data, error, isLoading } = useQuery({ queryKey: ["restaurants"], queryFn: async () => await fetchRestaurants() },)
     const location = useLocation()
     const navigate = useNavigate();
 
