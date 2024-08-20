@@ -3,13 +3,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteRestaurant, deleteReviewFromRestaurant, fetchRestaurantWithReview } from "../../api/restaurants/req-methods";
 import { Box, Button, Card, CardContent, Container, Grid, Rating, Typography } from "@mui/material";
+import { useAuth } from "../../context/AuthContext";
 
 export function ViewRestaurant() {
 
 
     const { id } = useParams()
     const { data: restaurant, isLoading, error } = useQuery({ queryKey: ["fetchRestaurantWithReviews", id], queryFn: async () => await fetchRestaurantWithReview(id as string) })
-
+    const {user} = useAuth()
     const queryClient = useQueryClient()
 
     const deleteMutation = useMutation<any, unknown, any>({
@@ -30,7 +31,12 @@ export function ViewRestaurant() {
   const navigate = useNavigate()
 
     const handleClick = (restaurantId: string) => {
-      navigate(`/restaurants/${restaurantId}/reviews/create`)
+      if (user) {
+         navigate(`/restaurants/${restaurantId}/reviews/create`)
+      } else {
+        navigate("/login")
+      }
+
     }
 
     const handleDelete = (restaurantId: string) => {
@@ -63,8 +69,8 @@ export function ViewRestaurant() {
         <Typography variant="body1" gutterBottom>{restaurant.description}</Typography>
         <Typography variant="subtitle1">{restaurant.city}</Typography>
         <Typography variant="subtitle1">{restaurant.address}</Typography>
-        <Button color="error" onClick={() => {handleDelete(restaurant._id)}}>Delete</Button>
-        <Button color="info" onClick={() => {handleUpdate(restaurant._id)}}>Edit</Button>
+        {user && (user._id === restaurant.user) && <Button color="error" onClick={() => {handleDelete(restaurant._id)}}>Delete</Button>}
+        {user && (user._id === restaurant.user) && <Button color="info" onClick={() => {handleUpdate(restaurant._id)}}>Edit</Button>}
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h5" gutterBottom>Reviews</Typography>
@@ -76,8 +82,8 @@ export function ViewRestaurant() {
               <Typography variant="body2" gutterBottom>{review.comment}</Typography>
               <Rating name="read-only" value={review.rating} readOnly />
               <Typography variant="body2">By {review.user.username}</Typography>
-              <Button color="info" onClick={() => { handleUpdateReview(review._id)}}>Edit</Button>
-              <Button color="error" onClick={() => {handleDeleteReview(review._id, restaurant._id)}}>Delete</Button>
+              {user && (user._id === review.user._id) && <Button color="info" onClick={() => { handleUpdateReview(review._id)}}>Edit</Button>}
+              {user && (user._id === review.user._id) && <Button color="error" onClick={() => {handleDeleteReview(review._id, restaurant._id)}}>Delete</Button>}
             </CardContent>
           </Card>
         ))}

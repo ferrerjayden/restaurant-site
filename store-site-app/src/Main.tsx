@@ -12,10 +12,12 @@ import { EditRestaurant } from './pages/restaurants/EditRestaurant';
 import { EditReview } from './pages/reviews/EditReview';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
 
   return (
+    <AuthProvider>
     <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home/>}/>
@@ -34,6 +36,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
         </Routes>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 

@@ -34,7 +34,6 @@ export function CreateRestaurantForm () {
     }
 
 
-
     return (
     <Box
       sx={{
@@ -97,10 +96,6 @@ export function CreateRestaurantForm () {
             Submit
           </Button>
         </form>
-
-        {/* have to take a look at this.. not working */}
-        {mutation.isError && <Alert severity="error">Error creating restaurant!</Alert>}
-        {mutation.isSuccess && <Alert severity="success">Restaurant Created!</Alert>}
       </Box>
     </Box>
   );

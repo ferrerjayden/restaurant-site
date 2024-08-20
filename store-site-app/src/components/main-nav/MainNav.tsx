@@ -1,8 +1,9 @@
 
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material"
 import { useState, MouseEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth } from "../../context/AuthContext";
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -13,6 +14,9 @@ const pages = ['Home', 'About', 'Restaurants', 'Contact']
 const settings = ['Profile', 'Register', 'Login', 'Logout']
 
 const MainNav = () => {
+
+    const navigate = useNavigate()
+    const {logout} = useAuth()
     const [anchorUserBox, setAnchorUserBox] = useState<null | HTMLElement>(null);
 
     const handleUserOnClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -21,6 +25,11 @@ const MainNav = () => {
 
     const handleCloseUserMenu = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorUserBox(null);
+    }
+
+    const handleLogOut = (event: any) => {
+        logout()
+        navigate("/")
     }
 
     return (
@@ -72,8 +81,16 @@ const MainNav = () => {
                     onClose={handleCloseUserMenu}
                     anchorEl={anchorUserBox}>
                     {settings.map((setting) => (
+                        setting === "Logout" ? (
+                  <MenuItem
+                    key={setting}
+                    onClick={handleLogOut}
+                  >
+                    <Typography textAlign={"center"}>{setting}</Typography>
+                  </MenuItem>
+                ):
                         <StyledLink to={`/${setting.toLowerCase()}`} key={setting}>
-                            <MenuItem key={setting}>
+                            <MenuItem key={setting} onClick={() => {console.log("sup")}}>
                             <Typography textAlign={"center"}>{setting}</Typography>
                             </MenuItem>
                         </StyledLink>

@@ -4,6 +4,7 @@ import { QueryCache, useQuery } from "@tanstack/react-query";
 import { fetchRestaurants } from "../../api/restaurants/req-methods";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -14,6 +15,7 @@ export function RestaurantBoard() {
     const { data, error, isLoading } = useQuery({ queryKey: ["restaurants"], queryFn: async () => await fetchRestaurants() },)
     const location = useLocation()
     const navigate = useNavigate();
+    const {user} = useAuth()
 
     const [page, setPage] = useState(1);
     const itemsPerPage = 20;
@@ -32,6 +34,14 @@ export function RestaurantBoard() {
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     }
+
+     const handleNewRestaurantClick = () => {
+        if (user) {
+            navigate(`${location.pathname}/create`);
+        } else {
+            navigate('/login');
+        }
+    };
 
 
     return (
@@ -56,8 +66,8 @@ export function RestaurantBoard() {
                     </Card></ButtonBase>))}
 
             </Box>
-           <StyledLink to={`${location.pathname}/create`}>
-                <Button sx={{
+
+                <Button onClick={handleNewRestaurantClick} sx={{
                     background: '#5A5656',
                     color: "white",
                     ":hover": {
@@ -71,7 +81,7 @@ export function RestaurantBoard() {
                 }}>
                     NEW RESTAURANT
                 </Button>
-            </StyledLink>
+
             {data && (
                 <Pagination count={Math.ceil(data.length / itemsPerPage)} page={page} onChange={handlePageChange} sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}/>
             )}

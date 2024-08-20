@@ -5,6 +5,7 @@ import { FormFields, LoginUser } from "../../common-types"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import { loginUser } from "../../api/auth/req-methods"
+import { useAuth } from "../../context/AuthContext"
 
 const loginFormFields: FormFields[] = [
     {
@@ -19,11 +20,13 @@ const loginFormFields: FormFields[] = [
 
 export const Login = () => {
     const navigate = useNavigate()
+    const { login } = useAuth()
 
     const loginUserMutation = useMutation<any, unknown, any>({
         mutationFn: (formData: LoginUser) => loginUser(formData),
-        onSuccess: () => {
+        onSuccess: (data) => {
             navigate("/restaurants")
+            login(data.user)
         }
     })
 
