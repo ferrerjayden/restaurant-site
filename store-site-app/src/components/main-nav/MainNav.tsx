@@ -1,6 +1,6 @@
 
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material"
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthContext";
@@ -11,12 +11,11 @@ const StyledLink = styled(Link)`
 
 
 const pages = ['Home', 'About', 'Restaurants', 'Contact']
-const settings = ['Profile', 'Register', 'Login', 'Logout']
 
 const MainNav = () => {
-
+    const [settings, setSettings] = useState<string[]>([])
     const navigate = useNavigate()
-    const {logout} = useAuth()
+    const {logout, user} = useAuth()
     const [anchorUserBox, setAnchorUserBox] = useState<null | HTMLElement>(null);
 
     const handleUserOnClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -31,6 +30,14 @@ const MainNav = () => {
         logout()
         navigate("/")
     }
+
+    useEffect(() => {
+        if (user) {
+            setSettings(["Profile", "Logout"])
+        } else {
+            setSettings(["Register", "Login"])
+        }
+    }, [user])
 
     return (
     <AppBar sx={{backgroundColor: '#403d3d'}}>
