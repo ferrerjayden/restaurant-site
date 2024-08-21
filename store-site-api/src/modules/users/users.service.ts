@@ -28,7 +28,7 @@ export class UsersService {
         const user = await this.usersRepository.findByFilter({username: userId})
 
         if (!user) {
-            throw new HttpException("User not found", 404)
+            throw new HttpException("Invalid credentials!", 404)
         }
 
         return user

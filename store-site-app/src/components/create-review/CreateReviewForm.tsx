@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { createReview } from "../../api/restaurants/req-methods";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 export function CreateReviewForm () {
 
@@ -10,12 +11,17 @@ export function CreateReviewForm () {
     const navigate = useNavigate()
      const [formData, setFormData] = useState({})
 
+     const { showSnackbar } = useSnackbar()
      const queryClient = useQueryClient()
 
      const mutation = useMutation<any, unknown, any>({
         mutationFn: (formData) => createReview(restaurantId as string, formData),
         onSuccess: () => {
           queryClient.refetchQueries()
+          showSnackbar("Successfully created review","success")
+        },
+        onError: (error: any) => {
+          showSnackbar("Could not create review", "error")
         }
      })
 
@@ -99,10 +105,6 @@ export function CreateReviewForm () {
             Submit
           </Button>
         </form>
-
-        {/* have to take a look at this.. not working */}
-        {/* {mutation.isError && <Alert severity="error">Error creating restaurant!</Alert>}
-        {mutation.isSuccess && <Alert severity="success">Restaurant Created!</Alert>} */}
       </Box>
     </Box>
     )

@@ -5,6 +5,7 @@ import MainNav from "../../components/main-nav/MainNav"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import { registerUser } from "../../api/auth/req-methods"
+import { useSnackbar } from "../../context/SnackbarContext"
 
 
 const registerFormFields: FormFields[] = [
@@ -25,10 +26,11 @@ const registerFormFields: FormFields[] = [
 export const Register = () => {
 
     const navigate = useNavigate()
-
+    const { showSnackbar } = useSnackbar()
     const registerUserMutation = useMutation<any, unknown, any>({
         mutationFn: (formData: RegisterUser) => registerUser(formData),
         onSuccess: () => {
+            showSnackbar("Successfully registed!", "success")
             navigate("/login")
         }
     })

@@ -3,16 +3,23 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react";
 import { createRestaurant } from "../../api/restaurants/req-methods";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 export function CreateRestaurantForm () {
 
    const queryClient = useQueryClient()
+
+   const { showSnackbar } = useSnackbar()
 
     const navigate = useNavigate()
     const mutation = useMutation<any, unknown, any>({
         mutationFn: (formData) => createRestaurant(formData),
         onSuccess: () => {
           queryClient.refetchQueries()
+          showSnackbar('Successfully created restaurant!', 'success')
+        },
+        onError: (error: any) => {
+          showSnackbar(error.message, 'error')
         }
     })
 

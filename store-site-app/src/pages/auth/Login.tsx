@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import { loginUser } from "../../api/auth/req-methods"
 import { useAuth } from "../../context/AuthContext"
+import { useSnackbar } from "../../context/SnackbarContext"
 
 const loginFormFields: FormFields[] = [
     {
@@ -21,12 +22,17 @@ const loginFormFields: FormFields[] = [
 export const Login = () => {
     const navigate = useNavigate()
     const { login } = useAuth()
+    const { showSnackbar } = useSnackbar()
 
     const loginUserMutation = useMutation<any, unknown, any>({
         mutationFn: (formData: LoginUser) => loginUser(formData),
         onSuccess: (data) => {
             navigate("/restaurants")
+            showSnackbar("Successfully logged in", "success")
             login(data.user)
+        },
+        onError: (error: any) => {
+            showSnackbar(error.response.data.message, "error")
         }
     })
 

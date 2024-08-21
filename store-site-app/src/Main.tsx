@@ -13,10 +13,12 @@ import { EditReview } from './pages/reviews/EditReview';
 import { Register } from './pages/auth/Register';
 import { Login } from './pages/auth/Login';
 import { AuthProvider } from './context/AuthContext';
+import { SnackbarProvider } from './context/SnackbarContext';
 
 function App() {
 
   return (
+    <SnackbarProvider>
     <AuthProvider>
     <BrowserRouter>
         <Routes>
@@ -37,6 +39,7 @@ function App() {
         </Routes>
     </BrowserRouter>
     </AuthProvider>
+    </SnackbarProvider>
   );
 }
 

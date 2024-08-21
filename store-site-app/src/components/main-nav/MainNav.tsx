@@ -4,6 +4,7 @@ import { useState, MouseEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthContext";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 const StyledLink = styled(Link)`
     text-decoration: none;
@@ -17,6 +18,8 @@ const MainNav = () => {
     const navigate = useNavigate()
     const {logout, user} = useAuth()
     const [anchorUserBox, setAnchorUserBox] = useState<null | HTMLElement>(null);
+    const { showSnackbar } = useSnackbar()
+
 
     const handleUserOnClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorUserBox(event.currentTarget);
@@ -28,6 +31,7 @@ const MainNav = () => {
 
     const handleLogOut = (event: any) => {
         logout()
+        showSnackbar("Successfully logged out", "info")
         navigate("/")
     }
 

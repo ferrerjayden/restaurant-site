@@ -3,17 +3,21 @@ import { getReview, updateRestaurant, updateReviewOnRestaurant } from "../../api
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { Box, Button, FormControl, TextField, Typography } from "@mui/material"
+import { useSnackbar } from "../../context/SnackbarContext"
 
 export function EditReviewForm () {
 
     const navigate = useNavigate()
     const { reviewId } = useParams()
-
-    const { data, error, isLoading} = useQuery({ queryKey: ["getReview", reviewId], queryFn: async () => await getReview(reviewId as string) })
+  const {showSnackbar} = useSnackbar()
+    const { data } = useQuery({ queryKey: ["getReview", reviewId], queryFn: async () => await getReview(reviewId as string) })
 
     const updateReviewMutation = useMutation<any, unknown, any>({
     mutationFn: ({formData, reviewId}: {formData: any, reviewId: string}) => {
-        return updateReviewOnRestaurant(reviewId as string, formData)}
+        return updateReviewOnRestaurant(reviewId as string, formData)},
+        onSuccess: () => {
+          showSnackbar("Updated review", "success")
+        }
     })
 
      const [formData, setFormData] = useState({
@@ -115,10 +119,6 @@ export function EditReviewForm () {
             Submit
           </Button>
         </form>
-
-        {/* have to take a look at this.. not working */}
-        {/* {mutation.isError && <Alert severity="error">Error creating restaurant!</Alert>}
-        {mutation.isSuccess && <Alert severity="success">Restaurant Created!</Alert>} */}
       </Box>
     </Box>
     )

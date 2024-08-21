@@ -4,18 +4,21 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRestaurant, updateRestaurant } from "../../api/restaurants/req-methods";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 export function EditRestaurantForm() {
 
     const navigate = useNavigate()
     const { restaurantId } = useParams()
-    const { data, error, isLoading } = useQuery({ queryKey: ["getRestaurants", restaurantId], queryFn: async () => await getRestaurant(restaurantId as string) })
+    const { data } = useQuery({ queryKey: ["getRestaurants", restaurantId], queryFn: async () => await getRestaurant(restaurantId as string) })
+    const { showSnackbar } = useSnackbar()
 
     const queryClient = useQueryClient()
     const mutation = useMutation<any, unknown, any>({
         mutationFn: (formData: any) => updateRestaurant(restaurantId as string, formData),
         onSuccess: () => {
           queryClient.refetchQueries()
+          showSnackbar("Updated restaurant!", "success")
         }
     })
 
@@ -123,10 +126,6 @@ export function EditRestaurantForm() {
             Submit
           </Button>
         </form>
-
-        {/* have to take a look at this.. not working */}
-        {/* {mutation.isError && <Alert severity="error">Error creating restaurant!</Alert>}
-        {mutation.isSuccess && <Alert severity="success">Restaurant Created!</Alert>} */}
       </Box>
     </Box>
 
