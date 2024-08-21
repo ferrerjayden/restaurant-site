@@ -88,6 +88,7 @@ export function EditRestaurantForm() {
               value={formData.name}
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Description"
@@ -95,6 +96,7 @@ export function EditRestaurantForm() {
               value={formData.description}
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Address"
@@ -102,6 +104,7 @@ export function EditRestaurantForm() {
               value={formData.address}
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="City"
@@ -109,6 +112,7 @@ export function EditRestaurantForm() {
               value={formData.city}
               onChange={handleChange}
               fullWidth
+              required
             />
           </FormControl>
           <Button

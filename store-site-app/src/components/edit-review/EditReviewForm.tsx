@@ -83,6 +83,7 @@ export function EditReviewForm () {
               value={formData.title}
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Comment"
@@ -90,12 +91,19 @@ export function EditReviewForm () {
               value={formData.comment}
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Rating"
               name="rating"
+              type="number"
+              InputProps={{
+                inputProps: {
+                    max: 5, min: 0
+                }}}
               value={formData.rating}
               onChange={handleChange}
+              required
               fullWidth
             />
           </FormControl>

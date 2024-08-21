@@ -68,18 +68,27 @@ export function CreateReviewForm () {
               name="title"
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Comment"
               name="comment"
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Rating"
               name="rating"
+              type="number"
+              InputProps={{
+                inputProps: {
+                    max: 5, min: 0
+                }
+            }}
               onChange={handleChange}
               fullWidth
+              required
             />
           </FormControl>
           <Button

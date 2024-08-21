@@ -16,7 +16,7 @@ export default function Profile () {
     return (
         <>
             <MainNav />
-            <Box sx={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
+            <Box sx={{ padding: "20px", maxWidth: "800px", margin: "auto", marginTop: "100px" }}>
                 <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
                     <Avatar sx={{ width: 100, height: 100, marginRight: "20px" }}>
                     </Avatar>

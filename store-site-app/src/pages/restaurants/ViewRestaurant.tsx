@@ -59,7 +59,7 @@ export function ViewRestaurant() {
    return (
     <>
     <MainNav/>
-    {restaurant && <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+    {restaurant && <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', marginTop: "150px" }}>
     <Grid container spacing={2} sx={{ width: "100%", padding: 4, marginTop: "100px", boxShadow: 3 }}>
       <Grid item xs={12} sm={6}>
         <img src={"/images/mcdonalds-again.jpeg"} alt={restaurant.name} style={{ width: '100%', height: 'auto' }} />
@@ -74,6 +74,7 @@ export function ViewRestaurant() {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h5" gutterBottom>Reviews</Typography>
+        <Box sx={{ maxHeight: 400, overflowY: 'auto' }}>
         {restaurant.reviews.length === 0 && <Typography variant="body1">No reviews yet</Typography>}
         {restaurant.reviews.map((review: any, index: any) => (
           <Card key={index} variant="outlined" sx={{ marginBottom: 2 }}>
@@ -88,6 +89,7 @@ export function ViewRestaurant() {
           </Card>
         ))}
          <Button color="primary" onClick={() => { handleClick(id as string)}}>Add Review</Button>
+         </Box>
       </Grid>
 
     </Grid>

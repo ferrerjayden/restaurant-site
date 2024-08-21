@@ -68,24 +68,28 @@ export function CreateRestaurantForm () {
               name="name"
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Description"
               name="description"
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="Address"
               name="address"
               onChange={handleChange}
               fullWidth
+              required
             />
             <TextField
               label="City"
               name="city"
               onChange={handleChange}
               fullWidth
+              required
             />
           </FormControl>
           <Button
