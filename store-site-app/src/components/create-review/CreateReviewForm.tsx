@@ -5,67 +5,65 @@ import { createReview } from "../../api/restaurants/req-methods";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "../../context/SnackbarContext";
 
-export function CreateReviewForm () {
+export function CreateReviewForm() {
+  const { restaurantId } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
 
-    const { restaurantId } = useParams()
-    const navigate = useNavigate()
-     const [formData, setFormData] = useState({})
+  const { showSnackbar } = useSnackbar();
+  const queryClient = useQueryClient();
 
-     const { showSnackbar } = useSnackbar()
-     const queryClient = useQueryClient()
+  const mutation = useMutation<any, unknown, any>({
+    mutationFn: (formData) => createReview(restaurantId as string, formData),
+    onSuccess: () => {
+      queryClient.refetchQueries();
+      showSnackbar("Successfully created review", "success");
+    },
+    onError: (error: any) => {
+      showSnackbar("Could not create review", "error");
+    },
+  });
 
-     const mutation = useMutation<any, unknown, any>({
-        mutationFn: (formData) => createReview(restaurantId as string, formData),
-        onSuccess: () => {
-          queryClient.refetchQueries()
-          showSnackbar("Successfully created review","success")
-        },
-        onError: (error: any) => {
-          showSnackbar("Could not create review", "error")
-        }
-     })
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-      const handleChange = (e: any) => {
-        const { name, value } = e.target
-         setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    }
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    navigate(`/restaurants/view/${restaurantId}`);
+    mutation.mutate(formData);
+  };
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
-        navigate(`/restaurants/view/${restaurantId}`)
-        mutation.mutate(formData)
-    }
-
-
-
-    return (
-          <Box
-            sx={{
-                display: 'grid',
-                placeItems: 'center',
-                height: '100vh',
-            }}>
+  return (
+    <Box
+      sx={{
+        display: "grid",
+        placeItems: "center",
+        height: "100vh",
+      }}
+    >
       <Box
         sx={{
-          width: '50%',
+          width: "50%",
           padding: 4,
           boxShadow: 3,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           gap: 2,
         }}
       >
         <Typography sx={{ mb: 2, fontWeight: 800 }}>WRITE A REVIEW</Typography>
-        <form style={{ width: '100%' }}>
+        <form style={{ width: "100%" }}>
           <FormControl
             sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
               gap: 2,
             }}
           >
@@ -89,9 +87,10 @@ export function CreateReviewForm () {
               type="number"
               InputProps={{
                 inputProps: {
-                    max: 5, min: 0
-                }
-            }}
+                  max: 5,
+                  min: 0,
+                },
+              }}
               onChange={handleChange}
               fullWidth
               required
@@ -100,12 +99,18 @@ export function CreateReviewForm () {
           <Button
             type="submit"
             onClick={handleSubmit}
-            sx={{ mt: 2, width: '100%', backgroundColor: '#403d3d', color: "white", fontWeight: 800 }}
+            sx={{
+              mt: 2,
+              width: "100%",
+              backgroundColor: "#403d3d",
+              color: "white",
+              fontWeight: 800,
+            }}
           >
             Submit
           </Button>
         </form>
       </Box>
     </Box>
-    )
+  );
 }
