@@ -6,7 +6,7 @@ This fullstack web application was developed to enhance my skills in modern web 
 
 ## Demo
 
-**PLACEHOLDER: Create and link to a demo video that showcases the functionality of the application.**
+**Link to Youtube**: https://youtu.be/EcsRhI6zChM
 
 ## Features
 
