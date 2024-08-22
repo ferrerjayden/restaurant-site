@@ -6,9 +6,6 @@ export function CreateRestaurant () {
     return (
         <>
             <MainNav />
-            <Box>
-                <h1>Create Restaurant</h1>
-            </Box>
          <CreateRestaurantForm/>
         </>
     )

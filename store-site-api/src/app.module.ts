@@ -6,13 +6,17 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RestaurantsModule } from './modules/restaurants/restaurants.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     RestaurantsModule,
     ReviewsModule,
     UsersModule,
     AuthModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/store-site'),
+    MongooseModule.forRoot(`mongodb://${process.env.MONGO_HOST}`),
+    ConfigModule.forRoot({
+        isGlobal: true
+      })
   ],
   controllers: [AppController],
   providers: [AppService],

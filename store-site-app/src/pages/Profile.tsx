@@ -7,7 +7,6 @@ import { useAuth } from "../context/AuthContext";
 export default function Profile () {
 
     const {user} = useAuth()
-    console.log(user)
     const { data: restaurants, error: restaurantError, isLoading: restaurantLoading } = useQuery({ queryKey: ["restaurants"], queryFn: async () => await getRestaurantsByUser(user._id) })
 
 

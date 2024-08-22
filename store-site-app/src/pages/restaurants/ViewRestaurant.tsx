@@ -70,7 +70,7 @@ export function ViewRestaurant() {
    return (
     <>
     <MainNav/>
-    {restaurant && <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', marginTop: "150px" }}>
+    {restaurant && <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', marginTop: "125px" }}>
     <Grid container spacing={2} sx={{ width: "100%", padding: 4, marginTop: "100px", boxShadow: 3 }}>
       <Grid item xs={12} sm={6}>
         <img src={"/images/mcdonalds-again.jpeg"} alt={restaurant.name} style={{ width: '100%', height: 'auto' }} />

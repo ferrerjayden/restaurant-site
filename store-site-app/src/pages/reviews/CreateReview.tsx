@@ -6,9 +6,6 @@ export function CreateReview () {
     return (
         <>
             <MainNav />
-            <Box sx={{paddingTop: "100px"}}>
-                <h1>Create Review</h1>
-            </Box>
             <CreateReviewForm/>
 
         </>
