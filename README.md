@@ -54,7 +54,7 @@ If you’re using `zshrc` or another shell, you may need to set the environment 
 
 ## Backend Architecture
 
-![Demo of backend model architecture](restaurant_uml.png)
+![Demo of backend model architecture](restaurant-uml-photo.png)
 
 The backend is designed around three primary models with one-to-many relationships:
 
