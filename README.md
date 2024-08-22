@@ -50,11 +50,11 @@ Ensure you have the following installed:
 
 ### Additional Notes for Different Terminals
 
-If you’re using `zshrc` or another shell, you may need to set the environment variables differently. Please refer to the relevant terminal documentation for guidance on setting environment variables. For example, with zsh, you may need to set your zshrc file with the correct environment variables and their respective values 
+If you’re using `zshrc` or another shell, you may need to set the environment variables differently. Please refer to the relevant terminal documentation for guidance on setting environment variables. For example, with zsh, you may need to set your zshrc file with the correct environment variables and their respective values
 
 ## Backend Architecture
 
-**PLACEHOLDER: Insert whimsical diagrams showcasing the backend architecture.**
+![Demo of backend model architecture](restaurant_uml.png)
 
 The backend is designed around three primary models with one-to-many relationships:
 
