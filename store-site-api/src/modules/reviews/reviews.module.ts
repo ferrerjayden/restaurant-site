@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { ReviewsController } from './reviews.controller';
-import { ReviewsService } from './reviews.service';
-import { RestaurantsModule } from '../restaurants/restaurants.module';
-import { ReviewsRepository } from './repositories/review.repository';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Review, ReviewSchema } from './types/reviews.schema';
+import { Module } from '@nestjs/common'
+import { ReviewsController } from './reviews.controller'
+import { ReviewsService } from './reviews.service'
+import { RestaurantsModule } from '../restaurants/restaurants.module'
+import { ReviewsRepository } from './repositories/review.repository'
+import { MongooseModule } from '@nestjs/mongoose'
+import { Review, ReviewSchema } from './types/reviews.schema'
 
 @Module({
   imports: [
@@ -13,6 +13,6 @@ import { Review, ReviewSchema } from './types/reviews.schema';
   ],
   controllers: [ReviewsController],
   providers: [ReviewsService, ReviewsRepository],
-  exports: [ReviewsService]
+  exports: [ReviewsService],
 })
 export class ReviewsModule {}

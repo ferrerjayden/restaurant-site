@@ -1,18 +1,9 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto';
-import { ReviewsService } from './reviews.service';
-import { ObjectId } from 'bson';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { GetUser } from '../users/users.decorator';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common'
+import { CreateReviewDTO, UpdateReviewDTO } from './types/review.dto'
+import { ReviewsService } from './reviews.service'
+import { ObjectId } from 'bson'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { GetUser } from '../users/users.decorator'
 
 @Controller('reviews')
 export class ReviewsController {
@@ -20,7 +11,7 @@ export class ReviewsController {
 
   @Get(':reviewId')
   async getReview(@Param('reviewId') reviewId: string) {
-    return this.reviewsService.getReview(reviewId);
+    return this.reviewsService.getReview(reviewId)
   }
 
   @Patch(':reviewId')
@@ -30,7 +21,7 @@ export class ReviewsController {
     @Param('reviewId') reviewId: ObjectId | string,
     @Body() updateReviewData: UpdateReviewDTO,
   ) {
-    return this.reviewsService.updateReview(reviewId, updateReviewData, user);
+    return this.reviewsService.updateReview(reviewId, updateReviewData, user)
   }
 
   @Delete(':reviewId/:restaurantId')
@@ -40,13 +31,13 @@ export class ReviewsController {
     @Param('reviewId') reviewId: ObjectId,
     @Param('restaurantId') restaurantId: ObjectId,
   ) {
-    return this.reviewsService.deleteReview(reviewId, restaurantId, user);
+    return this.reviewsService.deleteReview(reviewId, restaurantId, user)
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('helloprotected')
   async helloProtected() {
-    return 'Hello from protected route!';
+    return 'Hello from protected route!'
   }
 
   @Post(':restaurantId')
@@ -56,10 +47,9 @@ export class ReviewsController {
     @Param('restaurantId') restaurantId: ObjectId,
     @Body() createReviewData: CreateReviewDTO,
   ) {
-    return this.reviewsService.createReviewOnRestaurant(
-      restaurantId,
-      {user: ObjectId.createFromHexString(user.userId), ...createReviewData},
-    );
+    return this.reviewsService.createReviewOnRestaurant(restaurantId, {
+      user: ObjectId.createFromHexString(user.userId),
+      ...createReviewData,
+    })
   }
-
 }

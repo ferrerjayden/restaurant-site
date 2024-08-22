@@ -1,5 +1,5 @@
 export interface ReviewData {
-  title: string;
-  comment: string;
-  rating: number;
+  title: string
+  comment: string
+  rating: number
 }
