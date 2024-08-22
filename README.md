@@ -4,6 +4,10 @@
 
 This fullstack web application was developed to enhance my skills in modern web development, using a range of popular frameworks and technologies. The application is a restaurant website that allows users to browse restaurants created by other users, as well as create, edit, and delete their own restaurants. Additionally, users can manage reviews for each restaurant, including creating, updating, and deleting reviews. Authentication and authorization are handled through JWT, ensuring secure access to user-specific features.
 
+## Demo
+
+**PLACEHOLDER: Create and link to a demo video that showcases the functionality of the application.**
+
 ## Features
 
 - **User Authentication**: Registration, login, and logout functionality using JWT authentication.
@@ -62,14 +66,12 @@ The backend is designed around three primary models with one-to-many relationshi
 - **User** to **Reviews**: A user can write multiple reviews.
 - **Restaurants** to **Reviews**: Each restaurant can have multiple reviews associated with it.
 
-## Demo
-
-**PLACEHOLDER: Create and link to a demo video that showcases the functionality of the application.**
-
 ## Project Next Steps
 
 - **Fixing Frontend Bugs**: Addressing any UI quirks and enhancing user experience.
+- **Form validations**: Better form validations to prevent corrupt data from being created
 - **Deployment**: Deploying the application to Heroku or another cloud service.
 - **Dockerization**: Creating a Docker file to facilitate local development and testing.
 - **Feature Expansion**: Adding new features and improving existing ones based on user feedback.
 - **E2E Testing**: Implementing end-to-end testing using Cypress to ensure the application functions as expected in real-world scenarios.
+- **Security Concerns**: Implementing safeguards to prevent bad actors from performing malicious activities
